@@ -1,9 +1,23 @@
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { useSelector, useDispatch } from 'react-redux'
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { loginAsync } from './loginSlice';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 function Login() {
+    //const token = useSelector((state: any) => state.login.value)
+    const token = useSelector((state: any) => state.login.token);
+    const status = useSelector((state: any) => state.login.status);
+    const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+
+    const navigateTo = useNavigate()
+    useEffect(() => {
+        if (token) navigateTo('/')
+    }, [navigateTo, token])
 
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault()
         const { target } = event;
 
@@ -11,6 +25,7 @@ function Login() {
             email: target.email.value,
             password: target.password.value
         }
+        dispatch(loginAsync(payload))
         console.log(target, payload);
 
     };
