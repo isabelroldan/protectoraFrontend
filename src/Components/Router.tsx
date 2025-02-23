@@ -8,6 +8,7 @@ import Usuarios from './Usuarios/Usuarios';
 import UsuariosEdit from './Usuarios/UsuarioEdit';
 import UsuariosSee from './Usuarios/UsuariosSee';
 import Solicitudes from './Solicitudes/Solicitudes';
+import SolicitudSee from './Solicitudes/SolicitudSee';
 
 function Router() {
 
@@ -28,6 +29,7 @@ function Router() {
                     <Route path='/usuarios/edit/:id' element={<UsuariosEdit />}></Route>
 
                     <Route path='/solicitudes' element={<Solicitudes />}></Route>
+                    <Route path='/solicitudes/see/:id' element={<SolicitudSee />}></Route>
                 </Routes>
             </BrowserRouter>
         </>
