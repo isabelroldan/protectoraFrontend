@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
@@ -11,11 +11,11 @@ function LayoutNav() {
         <>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
-                    <Navbar.Brand href="#home">Protectora Mascotas</Navbar.Brand>
+                    <Navbar.Brand as={Link} to={"/"} >Protectora Mascotas</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Mascotas</Nav.Link>
-                        <Nav.Link href="#features">Citas</Nav.Link>
-                        <Nav.Link href="#pricing">Usuarios</Nav.Link>
+                        <Nav.Link as={Link} to={"/mascotas"}>Mascotas</Nav.Link>
+                        <Nav.Link as={Link} to={"/solicitudes"}>Solicitudes</Nav.Link>
+                        <Nav.Link as={Link} to={"/usuarios"}>Usuarios</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
