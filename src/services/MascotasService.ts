@@ -1,12 +1,12 @@
 import axios from "axios";
+import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/mascotas'
 
 export const getMascotas = async () => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.get(baseUrl, config);
@@ -18,8 +18,7 @@ export const getMascotas = async () => {
 export const getMascota = async (id: string) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.get(`${baseUrl}/${id}`, config);
@@ -31,8 +30,7 @@ export const getMascota = async (id: string) => {
 export const createMascota = async (payload: any) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.post(baseUrl, payload, config);
@@ -44,8 +42,7 @@ export const createMascota = async (payload: any) => {
 export const updateMascota = async (id: string, payload: any) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.put(`${baseUrl}/${id}`, payload, config);
@@ -58,8 +55,7 @@ export const updateMascota = async (id: string, payload: any) => {
 export const deleteMascota = async (id: string) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.delete(`${baseUrl}/${id}`, config);
@@ -70,13 +66,3 @@ export const deleteMascota = async (id: string) => {
         id: id
     }
 }
-
-/* export const doObtenerMascotas = async (token: string) => {
-    const config = {
-        headers: {
-            Authorization: Bearer ${token}
-        }
-    }
-    const res = await axios.get(baseUrl+"/"+id, config);
-    return res.data
-} */

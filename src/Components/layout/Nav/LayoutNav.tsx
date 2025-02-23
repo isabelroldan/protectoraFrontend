@@ -1,11 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { useState } from 'react';
+import { logoutAsync } from '../../login/loginSlice';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+
 
 function LayoutNav() {
+    const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
-    const token = useSelector((state: any) => state.login.token);
-    const navigateTo = useNavigate()
+    const [token, setToken] = useState(sessionStorage.getItem("token"));
+
+    const handleLogout = () => {
+        dispatch(logoutAsync())
+    };
 
     return (
         <>
@@ -16,6 +24,9 @@ function LayoutNav() {
                         <Nav.Link as={Link} to={"/mascotas"}>Mascotas</Nav.Link>
                         <Nav.Link as={Link} to={"/solicitudes"}>Solicitudes</Nav.Link>
                         <Nav.Link as={Link} to={"/usuarios"}>Usuarios</Nav.Link>
+                        {token
+                            ? <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                            : ''}
                     </Nav>
                 </Container>
             </Navbar>

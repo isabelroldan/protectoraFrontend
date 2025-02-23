@@ -1,12 +1,12 @@
 import axios from "axios";
+import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/solicitudes'
 
 export const getSolicitudes = async () => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.get(baseUrl, config);
@@ -18,8 +18,7 @@ export const getSolicitudes = async () => {
 export const getSolicitud = async (id: string) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.get(`${baseUrl}/${id}`, config);
@@ -31,8 +30,7 @@ export const getSolicitud = async (id: string) => {
 export const createSolicitud = async (payload: any) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.post(baseUrl, payload, config);
@@ -44,8 +42,7 @@ export const createSolicitud = async (payload: any) => {
 export const updateSolicitud = async (id: string, payload: any) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.put(`${baseUrl}/${id}`, payload, config);
@@ -57,8 +54,7 @@ export const updateSolicitud = async (id: string, payload: any) => {
 export const deleteSolicitud = async (id: string) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`
-            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
+            Authorization: `Bearer ${getToken()}`
         }
     }
     const res = await axios.delete(`${baseUrl}/${id}`, config);
