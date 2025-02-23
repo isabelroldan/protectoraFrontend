@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
-import { getSolicitudesAsync, resetSolicitud } from "./solicitudesSlice";
+import { deleteSolicitudAsync, getSolicitudesAsync, resetSolicitud } from "./solicitudesSlice";
 
 
 function Solicitudes() {
@@ -28,15 +28,15 @@ function Solicitudes() {
     };
     const handleDelete = () => {
         console.log(`has pulsado el botón eliminar para el id: ${deleteId}`)
-        // dispatch(deleteMascotaAsync(deleteId))
+        dispatch(deleteSolicitudAsync(deleteId))
         setShow(false)
     }
 
     return (
         <Layout>
             <Container>
-                <h2>Listado de mascotas</h2>
-                <Link className="btn btn-secondary" role="button" to={`/mascotas/create`}> Crear </Link>
+                <h2>Listado de Solicitudes</h2>
+                <Link className="btn btn-secondary" role="button" to={`/solicitudes/create`}> Crear </Link>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>ATENCION!!</Modal.Title>

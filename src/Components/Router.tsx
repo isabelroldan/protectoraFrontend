@@ -9,6 +9,7 @@ import UsuariosEdit from './Usuarios/UsuarioEdit';
 import UsuariosSee from './Usuarios/UsuariosSee';
 import Solicitudes from './Solicitudes/Solicitudes';
 import SolicitudSee from './Solicitudes/SolicitudSee';
+import SolicitudEdit from './Solicitudes/SolicitudEdit';
 
 function Router() {
 
@@ -29,7 +30,9 @@ function Router() {
                     <Route path='/usuarios/edit/:id' element={<UsuariosEdit />}></Route>
 
                     <Route path='/solicitudes' element={<Solicitudes />}></Route>
+                    <Route path='/solicitudes/create' element={<SolicitudEdit />}></Route>
                     <Route path='/solicitudes/see/:id' element={<SolicitudSee />}></Route>
+                    <Route path='/solicitudes/edit/:id' element={<SolicitudEdit />}></Route>
                 </Routes>
             </BrowserRouter>
         </>

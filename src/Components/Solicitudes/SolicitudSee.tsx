@@ -26,6 +26,7 @@ function SolicitudSee() {
                     : <div>
                         <p>Estado: {solicitud.estado}</p>
                         <p>Fecha de solicitud: {solicitud.fecha_solicitud}</p>
+                        <p>Comentario: {solicitud.comentario}</p>
                         <p>Nombre Mascota: {solicitud.mascota?.nombre}</p>
                         <p>Nombre Usuario: {solicitud.usuario?.name}</p>
                     </div>
