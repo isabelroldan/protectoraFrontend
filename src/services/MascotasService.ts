@@ -6,7 +6,7 @@ export const getMascotas = async () => {
     const config = {
         headers: {
             // Authorization: `Bearer ${token}`
-            Authorization: `Bearer Kkahff2ixmms6n2eODGQVWVqgg1ZZXUAb04WL0Yk394b9885`
+            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
         }
     }
     const res = await axios.get(baseUrl, config);
@@ -19,7 +19,7 @@ export const getMascota = async (id: string) => {
     const config = {
         headers: {
             // Authorization: `Bearer ${token}`
-            Authorization: `Bearer Kkahff2ixmms6n2eODGQVWVqgg1ZZXUAb04WL0Yk394b9885`
+            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
         }
     }
     const res = await axios.get(`${baseUrl}/${id}`, config);
@@ -32,7 +32,7 @@ export const createMascota = async (payload: any) => {
     const config = {
         headers: {
             // Authorization: `Bearer ${token}`
-            Authorization: `Bearer Kkahff2ixmms6n2eODGQVWVqgg1ZZXUAb04WL0Yk394b9885`
+            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
         }
     }
     const res = await axios.post(baseUrl, payload, config);
@@ -45,7 +45,7 @@ export const updateMascota = async (id: string, payload: any) => {
     const config = {
         headers: {
             // Authorization: `Bearer ${token}`
-            Authorization: `Bearer Kkahff2ixmms6n2eODGQVWVqgg1ZZXUAb04WL0Yk394b9885`
+            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
         }
     }
     const res = await axios.put(`${baseUrl}/${id}`, payload, config);
@@ -59,7 +59,7 @@ export const deleteMascota = async (id: string) => {
     const config = {
         headers: {
             // Authorization: `Bearer ${token}`
-            Authorization: `Bearer Kkahff2ixmms6n2eODGQVWVqgg1ZZXUAb04WL0Yk394b9885`
+            Authorization: `Bearer 1pj7RLwkZjHzO8Hh2OpXi4RtgJYNG55dsqrVLzBo591f966c`
         }
     }
     const res = await axios.delete(`${baseUrl}/${id}`, config);
