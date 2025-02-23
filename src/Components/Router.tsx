@@ -7,6 +7,7 @@ import MascotasEdit from './Mascotas/MascotaEdit';
 import Usuarios from './Usuarios/Usuarios';
 import UsuariosEdit from './Usuarios/UsuarioEdit';
 import UsuariosSee from './Usuarios/UsuariosSee';
+import Solicitudes from './Solicitudes/Solicitudes';
 
 function Router() {
 
@@ -25,6 +26,8 @@ function Router() {
                     <Route path='/usuarios/create' element={<UsuariosEdit />}></Route>
                     <Route path='/usuarios/see/:id' element={<UsuariosSee />}></Route>
                     <Route path='/usuarios/edit/:id' element={<UsuariosEdit />}></Route>
+
+                    <Route path='/solicitudes' element={<Solicitudes />}></Route>
                 </Routes>
             </BrowserRouter>
         </>
