@@ -11,7 +11,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         console.log(storedToken);
-        if (storedToken === "") navigateTo('/login')
+        if (!storedToken || storedToken === "") navigateTo('/login')
     }, [navigateTo, token])
 
     return (
