@@ -1,0 +1,122 @@
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #444;
+}
+
+.usuariosContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.usuarioCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+}
+
+.usuarioImgContainer {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+.usuarioImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #FFC382;
+}
+
+.usuarioInfo {
+    text-align: center;
+    width: 100%;
+}
+
+.usuarioInfo h2 {
+    font-size: 1.5rem;
+    color: #FFC382;
+}
+
+.usuarioInfo p {
+    margin: 5px 0;
+}
+
+.acciones {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btnCrear {
+    margin-bottom: 1rem;
+}
+
+.btnVer {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btnEditar {
+    background-color: #ffc107;
+    color: black;
+}
+
+.btnBorrar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.loaderContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+}
+
+.loaderGif {
+    width: auto;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .usuariosContainer {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .usuariosContainer {
+        grid-template-columns: 1fr;
+    }
+}

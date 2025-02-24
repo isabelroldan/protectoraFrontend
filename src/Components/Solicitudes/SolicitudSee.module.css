@@ -1,0 +1,64 @@
+.detalleSolicitudContainer {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.detalleSolicitudCard {
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detalleSolicitudInfo {
+    text-align: left;
+}
+
+.detalleSolicitudInfo h2 {
+    font-size: 2rem;
+    color: #FFC382;
+    margin-bottom: 15px;
+}
+
+.detalleSolicitudInfo p {
+    margin: 10px 0;
+}
+
+.btnVolver {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FFC382;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btnVolver:hover {
+    background-color: #e6a96d;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.loaderGif {
+    width: auto;
+    height: auto;
+}
+
+.link {
+    color: #FFC382;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
