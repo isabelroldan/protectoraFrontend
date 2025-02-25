@@ -43,7 +43,6 @@ function LayoutFooter() {
 export default LayoutFooter
 */
 
-import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styles from './LayoutFooter.module.css';

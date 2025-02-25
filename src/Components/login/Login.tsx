@@ -6,9 +6,7 @@ import { loginAsync } from './loginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 function Login() {
-    //const token = useSelector((state: any) => state.login.value)
-    const token = useSelector((state: any) => state.login.token);
-    const status = useSelector((state: any) => state.login.status);
+    const token = useSelector((state: any) => state.login.token)
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
     const navigateTo = useNavigate()

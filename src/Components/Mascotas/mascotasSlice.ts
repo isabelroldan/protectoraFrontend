@@ -45,7 +45,7 @@ export const deleteMascotaAsync = createAsyncThunk(
 export const mascotasSlice = createSlice({
     name: 'mascotas',
     initialState: {
-        mascotas: "",
+        mascotas: [] as any[],
         mascotaSelected: "",
         status: "idle",
     },

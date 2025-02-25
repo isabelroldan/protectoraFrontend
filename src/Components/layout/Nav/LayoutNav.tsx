@@ -37,8 +37,8 @@ function LayoutNav() {
 export default LayoutNav*/
 
 
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logoutAsync } from '../../login/loginSlice';
 import styles from './LayoutNav.module.css';
@@ -47,7 +47,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 function LayoutNav() {
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
-    const [token, setToken] = useState(sessionStorage.getItem("token"));
+    const [token] = useState(sessionStorage.getItem("token"));
 
     const handleLogout = () => {
         dispatch(logoutAsync())

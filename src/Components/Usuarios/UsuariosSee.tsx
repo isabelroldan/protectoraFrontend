@@ -39,7 +39,7 @@ function UsuariosSee() {
 export default UsuariosSee
 */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Layout from "../layout/Layout";
@@ -68,9 +68,9 @@ function UsuariosSee() {
                     </div>
                 ) : (
                     <div className={styles.detalleUsuarioCard}>
-                        <img 
+                        <img
                             src="/images/persona.jpg"
-                            alt="Usuario" 
+                            alt="Usuario"
                             className={styles.detalleUsuarioImg}
                         />
                         <div className={styles.detalleUsuarioInfo}>

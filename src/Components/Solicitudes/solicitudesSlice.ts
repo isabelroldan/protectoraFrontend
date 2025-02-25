@@ -46,7 +46,7 @@ export const deleteSolicitudAsync = createAsyncThunk(
 export const solicitudesSlice = createSlice({
     name: 'solicitudes',
     initialState: {
-        solicitudes: "",
+        solicitudes: [] as any[],
         solicitudSelected: "",
         status: "idle",
     },

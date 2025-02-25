@@ -93,7 +93,7 @@ export default Solicitudes
 */
 
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
