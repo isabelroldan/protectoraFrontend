@@ -73,6 +73,3 @@ Este comando:
 - Documenta las funciones y componentes principales.
 - Utiliza nombres descriptivos para variables y funciones.
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
