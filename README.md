@@ -1,50 +1,78 @@
-# React + TypeScript + Vite
+# Frontend de Gestión de Protectora de Animales
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción General
 
-Currently, two official plugins are available:
+Este proyecto es el frontend de una aplicación web para la gestión de una protectora de animales. Desarrollado en React, permite gestionar mascotas, usuarios, solicitudes de adopción y autenticación de usuarios, interactuando con un backend en Laravel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologías Utilizadas
 
-## Expanding the ESLint configuration
+- **React 18.2.0**
+- **Redux Toolkit** para gestión de estado
+- **React Router** para navegación
+- **Styled Components** para estilos
+- **Axios** para peticiones HTTP
+- **TypeScript** para tipado estático
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Estructura del Proyecto
 
-- Configure the top-level `parserOptions` property like this:
+### Componentes Principales
+- **Login**: Maneja la autenticación de usuarios
+- **Mascotas**: Gestiona el listado, creación, edición y eliminación de mascotas
+- **Usuarios**: Administra los usuarios del sistema
+- **Solicitudes**: Gestiona las solicitudes de adopción
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Estado Global (Redux)
+El estado global se gestiona mediante slices de Redux:
+- **loginSlice**: Maneja el estado de autenticación
+- **mascotasSlice**: Gestiona el estado de las mascotas
+- **usuariosSlice**: Administra el estado de los usuarios
+- **solicitudesSlice**: Controla el estado de las solicitudes
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Cada slice implementa acciones asíncronas utilizando `createAsyncThunk` para interactuar con la API del backend.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Servicios
+Los servicios (como `MascotasService`, `UsuariosService`, etc.) encapsulan la lógica de las peticiones HTTP al backend utilizando Axios.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Configuración y Despliegue
+
+### Desarrollo Local
+1. Clona el repositorio
+2. Instala las dependencias con `npm install`
+3. Inicia el servidor de desarrollo con `npm run dev`
+
+### Utilizando Docker (Frontend + Backend)
+
+Para una experiencia completa incluyendo el backend:
+
+1. Asegúrate de tener Docker y Docker Compose instalados.
+2. Clona los repositorios del frontend y backend.
+3. Navega hasta el directorio que contiene el archivo `docker-compose.yml`.
+4. Ejecuta: `docker-compose up`
+
+Este comando:
+- Construirá las imágenes Docker para el frontend y backend.
+- Clonará los repositorios de GitHub.
+- Configurará y iniciará los contenedores necesarios.
+- Ejecutará las migraciones y seeders de Laravel.
+
+### Acceso Inicial
+- **Usuario**: isabelroldancordoba@hotmail.com
+- **Contraseña**: password
+
+## Desarrollo y Contribución
+
+### Guía de Contribución
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu feature o bugfix.
+3. Realiza tus cambios siguiendo las convenciones de código.
+4. Envía un pull request con una descripción detallada.
+
+### Convenciones de Código
+- Utiliza TypeScript para todo el código.
+- Sigue los principios de Clean Code.
+- Documenta las funciones y componentes principales.
+- Utiliza nombres descriptivos para variables y funciones.
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
