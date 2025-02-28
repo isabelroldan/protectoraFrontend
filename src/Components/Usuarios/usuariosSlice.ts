@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getUsuarios, getUsuario, updateUsuario, deleteUsuario, createUsuario } from '../../services/UsuariosService';
 
-
+// Acciones asíncronas para operaciones CRUD de usuarios
 export const getUsuariosAsync = createAsyncThunk(
     'usuarios/getUsuarios',
     async () => {
@@ -50,6 +50,7 @@ export const usuariosSlice = createSlice({
         status: "idle",
     },
     reducers: {
+        // Reducer síncrono para resetear el estado del usuario seleccionado
         resetUsuario: (state) => {
             state.usuarioSelected = "";
             state.status = "idle"
@@ -57,6 +58,7 @@ export const usuariosSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        // Manejo de estados para getUsuariosAsync
             .addCase(getUsuariosAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -68,6 +70,8 @@ export const usuariosSlice = createSlice({
             .addCase(getUsuariosAsync.rejected, (state) => {
                 state.status = 'failed';
             })
+
+            // Manejo de estados para getUsuarioAsync
             .addCase(getUsuarioAsync.pending, (state) => {
                 state.status = 'loading',
                     state.usuarioSelected = ""
@@ -76,6 +80,8 @@ export const usuariosSlice = createSlice({
                 state.status = 'succeeded'
                 state.usuarioSelected = action.payload
             })
+
+            // Manejo de estados para updateUsuarioAsync
             .addCase(updateUsuarioAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -91,6 +97,8 @@ export const usuariosSlice = createSlice({
                 console.log(action.payload);
                 state.usuarios = prevState.usuarios
             })
+
+            // Manejo de estados para deleteUsuarioAsync
             .addCase(deleteUsuarioAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -105,6 +113,8 @@ export const usuariosSlice = createSlice({
                 console.log(action.payload);
                 state.usuarios = prevState.usuarios
             })
+
+            // Manejo de estados para createUsuarioAsync
             .addCase(createUsuarioAsync.pending, (state) => {
                 state.status = 'loading'
             })

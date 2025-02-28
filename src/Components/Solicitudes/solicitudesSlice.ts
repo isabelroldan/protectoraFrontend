@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, updateSolicitud } from '../../services/SolicitudesService';
 
+// Acciones asíncronas para operaciones CRUD de solicitudes
 
 export const getSolicitudesAsync = createAsyncThunk(
     'solicitudes/getSolicitudes',
@@ -51,6 +52,7 @@ export const solicitudesSlice = createSlice({
         status: "idle",
     },
     reducers: {
+        // Reducer síncrono para resetear el estado de la solicitud seleccionada
         resetSolicitud: (state) => {
             state.solicitudSelected = "";
             state.status = "idle"
@@ -58,6 +60,7 @@ export const solicitudesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        // Manejo de estados para getSolicitudesAsync
             .addCase(getSolicitudesAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -66,6 +69,8 @@ export const solicitudesSlice = createSlice({
                 state.solicitudes = action.payload;
                 console.log(state.solicitudes);
             })
+
+            // Manejo de estados para getSolicitudAsync
             .addCase(getSolicitudAsync.pending, (state) => {
                 state.status = 'loading',
                     state.solicitudSelected = ""
@@ -74,6 +79,8 @@ export const solicitudesSlice = createSlice({
                 state.status = 'succeeded'
                 state.solicitudSelected = action.payload
             })
+
+            // Manejo de estados para updateSolicitudAsync
             .addCase(updateSolicitudAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -89,6 +96,8 @@ export const solicitudesSlice = createSlice({
                 console.log(action.payload);
                 state.solicitudes = prevState.solicitudes
             })
+
+            // Manejo de estados para deleteSolicitudAsync
             .addCase(deleteSolicitudAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -103,6 +112,8 @@ export const solicitudesSlice = createSlice({
                 console.log(action.payload);
                 state.solicitudes = prevState.solicitudes
             })
+
+            // Manejo de estados para createSolicitudAsync
             .addCase(createSolicitudAsync.pending, (state) => {
                 state.status = 'loading'
             })

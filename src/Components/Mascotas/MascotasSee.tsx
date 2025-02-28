@@ -1,45 +1,3 @@
-/*import { useParams } from "react-router-dom";
-import Layout from "../layout/Layout"
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-
-function MascotasSee() {
-    const { id } = useParams();
-    const mascotas = useSelector((state: any) => state.mascotas.mascotas);
-    const [mascota, setMascota] = useState()
-    useEffect(() => {
-        if (id) {
-            if (mascota) {
-                setMascota(undefined)
-            }
-            const mascotaSelected = mascotas.find((mascota: any) => mascota.id == id);
-
-            setMascota(mascotaSelected)
-            console.log(mascota);
-        }
-    }, [])
-    return (
-        <>
-            <Layout>
-                {(!mascota)
-                    ? <p>Cargando...</p>
-                    : <div>
-                        <p>Nombre: {mascota.nombre}</p>
-                        <p>Especie: {mascota.especie}</p>
-                        <p>Raza: {mascota.raza}</p>
-                        <p>Edad: {mascota.edad}</p>
-                        <p>Descripción: {mascota.descripcion}</p>
-                        <p>Estado: {mascota.estado}</p>
-                    </div>
-                }
-
-            </Layout>
-        </>
-    )
-}
-
-export default MascotasSee*/
-
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -49,10 +7,14 @@ import loaderGif from '/images/loader.gif';
 
 
 function MascotasSee() {
+    // Obtiene el id de la mascota de los parámetros de la URL
     const { id } = useParams();
+    // Obtiene la lista de mascotas del estado de Redux
     const mascotas = useSelector((state: any) => state.mascotas.mascotas);
+    // Estado local para almacenar la mascota seleccionada
     const [mascota, setMascota] = useState<any>();
 
+    // Efecto para encontrar y establecer la mascota seleccionada
     useEffect(() => {
         if (id) {
             const mascotaSelected = mascotas.find((m: any) => m.id == id);
@@ -60,6 +22,7 @@ function MascotasSee() {
         }
     }, [id, mascotas]);
 
+    // Función para determinar la imagen de la mascota basada en su especie
     const getImageSrc = (especie: string) => {
         const especieLower = especie.toLowerCase();
         if (especieLower === 'perro' || especieLower === 'perra') {

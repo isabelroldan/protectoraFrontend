@@ -3,6 +3,7 @@ import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/mascotas'
 
+// Obtener todas las mascotas
 export const getMascotas = async () => {
     const config = {
         headers: {
@@ -15,6 +16,7 @@ export const getMascotas = async () => {
     return res.data
 }
 
+// Obtener una mascota específica por ID
 export const getMascota = async (id: string) => {
     const config = {
         headers: {
@@ -27,6 +29,7 @@ export const getMascota = async (id: string) => {
     return res.data
 }
 
+// Crear una nueva mascota
 export const createMascota = async (payload: any) => {
     const config = {
         headers: {
@@ -39,6 +42,7 @@ export const createMascota = async (payload: any) => {
     return res.data
 }
 
+// Actualizar una mascota existente
 export const updateMascota = async (id: string, payload: any) => {
     const config = {
         headers: {
@@ -51,7 +55,7 @@ export const updateMascota = async (id: string, payload: any) => {
     return res.data
 }
 
-
+// Eliminar una mascota
 export const deleteMascota = async (id: string) => {
     const config = {
         headers: {

@@ -3,6 +3,7 @@ import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/usuarios'
 
+// Obtener todos los usuarios
 export const getUsuarios = async () => {
     const config = {
         headers: {
@@ -15,6 +16,7 @@ export const getUsuarios = async () => {
     return res.data
 }
 
+// Obtener un usuario específico por ID
 export const getUsuario = async (id: string) => {
     const config = {
         headers: {
@@ -27,6 +29,7 @@ export const getUsuario = async (id: string) => {
     return res.data
 }
 
+// Crear un nuevo usuario
 export const createUsuario = async (payload: any) => {
     const config = {
         headers: {
@@ -39,6 +42,7 @@ export const createUsuario = async (payload: any) => {
     return res.data
 }
 
+// Actualizar un usuario existente
 export const updateUsuario = async (id: string, payload: any) => {
     const config = {
         headers: {
@@ -51,7 +55,7 @@ export const updateUsuario = async (id: string, payload: any) => {
     return res.data
 }
 
-
+// Eliminar un usuario
 export const deleteUsuario = async (id: string) => {
     const config = {
         headers: {

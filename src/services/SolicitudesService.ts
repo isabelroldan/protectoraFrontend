@@ -3,6 +3,7 @@ import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/solicitudes'
 
+// Obtener todas las solicitudes
 export const getSolicitudes = async () => {
     const config = {
         headers: {
@@ -15,6 +16,7 @@ export const getSolicitudes = async () => {
     return res.data
 }
 
+// Obtener una solicitud específica por ID
 export const getSolicitud = async (id: string) => {
     const config = {
         headers: {
@@ -27,6 +29,7 @@ export const getSolicitud = async (id: string) => {
     return res.data
 }
 
+// Crear una nueva solicitud
 export const createSolicitud = async (payload: any) => {
     const config = {
         headers: {
@@ -39,6 +42,7 @@ export const createSolicitud = async (payload: any) => {
     return res.data
 }
 
+// Actualizar una solicitud existente
 export const updateSolicitud = async (id: string, payload: any) => {
     const config = {
         headers: {
@@ -51,6 +55,7 @@ export const updateSolicitud = async (id: string, payload: any) => {
     return res.data
 }
 
+// Eliminar una solicitud
 export const deleteSolicitud = async (id: string) => {
     const config = {
         headers: {

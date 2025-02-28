@@ -1,44 +1,3 @@
-/*import { useParams } from "react-router-dom";
-import Layout from "../layout/Layout"
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-
-function UsuariosSee() {
-    const { id } = useParams();
-    const usuarios = useSelector((state: any) => state.usuarios.usuarios);
-    const [usuario, setUsuario] = useState()
-    useEffect(() => {
-        if (id) {
-            if (usuario) {
-                setUsuario(undefined)
-            }
-            const usuarioSelected = usuarios.find((usuario: any) => usuario.id == id);
-
-            setUsuario(usuarioSelected)
-            console.log(usuario);
-        }
-    }, [])
-    return (
-        <>
-            <Layout>
-                {(!usuario)
-                    ? <p>Cargando...</p>
-                    : <div>
-                        <p>Nombre: {usuario.name}</p>
-                        <p>Email: {usuario.email}</p>
-                        <p>Dirección: {usuario.direccion}</p>
-                        <p>Teléfono: {usuario.telefono}</p>
-                    </div>
-                }
-
-            </Layout>
-        </>
-    )
-}
-
-export default UsuariosSee
-*/
-
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -47,10 +6,14 @@ import styles from "./UsuariosSee.module.css";
 import loaderGif from '/images/loader.gif';
 
 function UsuariosSee() {
+    // Obtiene el id del usuario de los parámetros de la URL
     const { id } = useParams();
+    // Obtiene la lista de usuarios del estado de Redux
     const usuarios = useSelector((state: any) => state.usuarios.usuarios);
+    // Estado local para almacenar el usuario seleccionado
     const [usuario, setUsuario] = useState<any>();
 
+    // Efecto para encontrar y establecer el usuario seleccionad
     useEffect(() => {
         if (id) {
             const usuarioSelected = usuarios.find((u: any) => u.id == id);

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getMascotas, getMascota, updateMascota, deleteMascota, createMascota } from '../../services/MascotasService';
 
-
+// Funcion para obtiener las mascotas
 export const getMascotasAsync = createAsyncThunk(
     'mascotas/getMascotas',
     async () => {
@@ -10,6 +10,7 @@ export const getMascotasAsync = createAsyncThunk(
     }
 );
 
+// Funcion para obtiener las mascota
 export const getMascotaAsync = createAsyncThunk(
     'mascotas/getMascota',
     async (id: string) => {
@@ -18,6 +19,7 @@ export const getMascotaAsync = createAsyncThunk(
     }
 );
 
+// Funcion para crear la mascota
 export const createMascotaAsync = createAsyncThunk(
     'mascotas/createMascota',
     async (payload: any) => {
@@ -26,6 +28,7 @@ export const createMascotaAsync = createAsyncThunk(
     }
 );
 
+// Funcion para modificar la mascota
 export const updateMascotaAsync = createAsyncThunk(
     'mascotas/updateMascota',
     async (payload: any) => {
@@ -34,6 +37,7 @@ export const updateMascotaAsync = createAsyncThunk(
     }
 );
 
+// Funcion para borrar la mascota
 export const deleteMascotaAsync = createAsyncThunk(
     'mascotas/deleteMascota',
     async (payload: any) => {
@@ -50,6 +54,7 @@ export const mascotasSlice = createSlice({
         status: "idle",
     },
     reducers: {
+        // Reducer síncrono para resetear el estado de la mascota seleccionada
         resetMascota: (state) => {
             state.mascotaSelected = "";
             state.status = "idle"
@@ -57,6 +62,7 @@ export const mascotasSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // Manejo de estados para getMascotasAsync
             .addCase(getMascotasAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -68,6 +74,8 @@ export const mascotasSlice = createSlice({
             .addCase(getMascotasAsync.rejected, (state) => {
                 state.status = 'failed';
             })
+
+            // Manejo de estados para getMascotaAsync
             .addCase(getMascotaAsync.pending, (state) => {
                 state.status = 'loading',
                     state.mascotaSelected = ""
@@ -76,12 +84,16 @@ export const mascotasSlice = createSlice({
                 state.status = 'succeeded'
                 state.mascotaSelected = action.payload
             })
+
+            // Manejo de estados para updateMascotaAsync
             .addCase(updateMascotaAsync.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(updateMascotaAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+                // Actualiza la mascota en el array de mascotas
                 const prevState = { ...state }
+                //Actualiza la mascota en el array de  las mascoats
                 prevState.mascotas = prevState.mascotas.map((mascota: any) => {
                     if (mascota.id == action.payload.id) {
                         mascota = action.payload
@@ -91,6 +103,8 @@ export const mascotasSlice = createSlice({
                 console.log(action.payload);
                 state.mascotas = prevState.mascotas
             })
+
+            // Manejo de estados para deleteMascotaAsync
             .addCase(deleteMascotaAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -103,8 +117,11 @@ export const mascotasSlice = createSlice({
                     }
                 })
                 console.log(action.payload);
+                //Elimina la mascota del array
                 state.mascotas = prevState.mascotas
             })
+
+            // Manejo de estados para createMascotaAsync
             .addCase(createMascotaAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -112,6 +129,7 @@ export const mascotasSlice = createSlice({
                 state.status = 'succeeded'
                 const newState = {
                     ...state,
+                    //Añade la nueva mascota al array
                     mascotas: [...state.mascotas, action.payload]
                 }
                 state.mascotas = newState.mascotas

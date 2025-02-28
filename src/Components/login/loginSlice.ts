@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { doLogin, doLogout } from '../../services/LoginService';
 
+// Acción asíncrona para el proceso de login
 export const loginAsync = createAsyncThunk(
   'login/doLogin',
   async (credentials: any) => {
@@ -9,6 +10,7 @@ export const loginAsync = createAsyncThunk(
   }
 );
 
+// Acción asíncrona para el proceso de logout
 export const logoutAsync = createAsyncThunk(
   'login/doLogout',
   async () => {
@@ -17,6 +19,7 @@ export const logoutAsync = createAsyncThunk(
   }
 );
 
+// Slice de Redux para manejar el estado de autenticación
 export const loginSlice = createSlice({
   name: 'login',
   initialState: {
@@ -27,6 +30,8 @@ export const loginSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      // Manejo de estados para loginAsync
       .addCase(loginAsync.pending, (state) => {
         state.status = 'loading';
       })
@@ -39,16 +44,20 @@ export const loginSlice = createSlice({
       .addCase(loginAsync.rejected, (state) => {
         state.status = 'failed';
       })
+
+      // Manejo de estados para logoutAsync
       .addCase(logoutAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(logoutAsync.fulfilled, (state) => {
         state.status = 'succeeded';
+        // Limpia el token al cerrar sesión
         state.token = ""
         sessionStorage.setItem("token", state.token);
       })
       .addCase(logoutAsync.rejected, (state) => {
         state.status = 'failed';
+        // Limpia el token incluso si falla el logout
         state.token = ""
         sessionStorage.setItem("token", state.token);
       })
