@@ -54,7 +54,7 @@ function LayoutFooter() {
                 <Row>
                     <Col md={4}>
                         <h3 className={styles.footerTitle}>Protectora de Animales</h3>
-                        <p>Dedicados al cuidado y adopción de mascotas desde 2010.</p>
+                        <p>Dedicados al cuidado y adopción de mascotas desde 2016.</p>
                     </Col>
                     <Col md={4}>
                         <h4 className={styles.footerSubtitle}>Enlaces Útiles</h4>
@@ -62,14 +62,14 @@ function LayoutFooter() {
                             <li><Link to="/">Inicio</Link></li>
                             <li><Link to="/mascotas">Mascotas en Adopción</Link></li>
                             <li><Link to="/solicitudes">Solicitar Adopción</Link></li>
-                            <li><Link to="/about">Sobre Nosotros</Link></li>
+                            <li><Link to="/">Sobre Nosotros</Link></li>
                         </ul>
                     </Col>
                     <Col md={4}>
                         <h4 className={styles.footerSubtitle}>Contáctanos</h4>
                         <p>Email: adopciones@protectora.com</p>
-                        <p>Teléfono: 123-456-7890</p>
-                        <p>Dirección: Calle Mascota 123, Ciudad</p>
+                        <p>Teléfono: 6582575961</p>
+                        <p>Dirección: Calle de la Huella 1, Córdoba</p>
                     </Col>
                 </Row>
                 <Row>
