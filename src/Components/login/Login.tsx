@@ -269,7 +269,7 @@ const Login = () => {
 </span>
         </label>
         <form className="form" onSubmit={handleSubmit}>
-          <div className="title">Sign In</div>
+          <div className="title"></div>
           <label className="label_input" htmlFor="email-input">Email</label>
           <input spellCheck="false" className="input" type="email" name="email" id="email-input" />
           <div className="frg_pss">
