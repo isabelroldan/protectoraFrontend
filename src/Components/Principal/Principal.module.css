@@ -1,0 +1,64 @@
+.hero {
+    background-image: url('/images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+    margin-bottom: 50px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.5rem;
+}
+
+.section {
+    margin-bottom: 50px;
+}
+
+.section h2 {
+    color: #FFC382;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.adoptedCard, .eventCard {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.adoptedCard:hover, .eventCard:hover {
+    transform: translateY(-5px);
+}
+
+.reasonCard {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #FFC382;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.reasonCard:hover {
+    background-color: #FFF1E0;
+}
+
+.reasonCard i {
+    font-size: 3rem;
+    color: #FFC382;
+    margin-bottom: 15px;
+}
+
+.reasonCard h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.reasonCard p {
+    color: #666;
+}
