@@ -55,7 +55,7 @@ function LayoutNav() {
 
     return (
         <nav className={styles.navBar}>
-            <div className={styles.logo}>Pelitos y Bigotes</div>
+            <Link to="/" className={styles.logo}>Pelitos y Bigotes</Link>
             <ul className={styles.navList}>
                 <li className={styles.navItem}>
                     <Link
