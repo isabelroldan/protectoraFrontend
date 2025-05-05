@@ -13,6 +13,9 @@ function LayoutNav() {
     // Verificación del token de sesión para control de autenticación
     const [token] = useState(sessionStorage.getItem("token"));
 
+    // Rol del usuario que se logea
+    const [rol] = useState(sessionStorage.getItem("rol"));
+
     // Manejo de cierre de sesión
     const handleLogout = () => {
         dispatch(logoutAsync())
@@ -38,14 +41,18 @@ function LayoutNav() {
                         Solicitudes
                     </Link>
                 </li>
-                <li className={styles.navItem}>
-                    <Link
-                        to="/usuarios"
-                        className={location.pathname === '/usuarios' ? styles.active : ''}
-                    >
-                        Usuarios
-                    </Link>
-                </li>
+
+                {/* Mostrar solo si el rol NO es "usuario" */}
+                {rol !== 'usuario' && (
+                    <li className={styles.navItem}>
+                        <Link
+                            to="/usuarios"
+                            className={location.pathname === '/usuarios' ? styles.active : ''}
+                        >
+                            Usuarios
+                        </Link>
+                    </li>
+                )}
 
                 {/* Opción de cierre de sesión, visible solo si hay un token */}
                 {token && (

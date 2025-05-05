@@ -38,9 +38,14 @@ export const loginSlice = createSlice({
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.token = action.payload.access_token.split('|')[1];
+
+        // Guardar token y rol
         sessionStorage.setItem("token", state.token);
-        console.log(state.token);
+        sessionStorage.setItem("rol", action.payload.user.rol);
+
+        console.log("ROL:", action.payload.user.rol);
       })
+
       .addCase(loginAsync.rejected, (state) => {
         state.status = 'failed';
       })
