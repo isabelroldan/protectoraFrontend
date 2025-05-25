@@ -54,12 +54,21 @@ function LayoutNav() {
                     </li>
                 )}
 
+                {rol !== 'usuario' &&  (
+                    <li className={styles.navItem}>
+                        <Link to="/calendario" className={location.pathname === '/calendario' ? styles.active : ''}>
+                            Calendario
+                        </Link>
+                    </li>
+                )}
+
                 {/* Opción de cierre de sesión, visible solo si hay un token */}
                 {token && (
                     <li className={styles.navItem}>
                         <a href="#" onClick={handleLogout}>Logout</a>
                     </li>
                 )}
+
             </ul>
         </nav>
     );
