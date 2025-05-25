@@ -1,48 +1,44 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getMascotas, getMascota, updateMascota, deleteMascota, createMascota } from '../../services/MascotasService';
 
-// Funcion para obtiener las mascotas
+// Thunks para acciones asincrónicas
 export const getMascotasAsync = createAsyncThunk(
     'mascotas/getMascotas',
-    async () => {
-        const mascotas = await getMascotas();
-        return mascotas;
+    async ({ page = 1, perPage = 5 }: { page?: number; perPage?: number }) => {
+        const response = await getMascotas(page, perPage);
+        return response; // { data, currentPage, totalPages, totalItems, perPage }
     }
 );
 
-// Funcion para obtiener las mascota
 export const getMascotaAsync = createAsyncThunk(
     'mascotas/getMascota',
     async (id: string) => {
-        const mascotas = await getMascota(id);
-        return mascotas;
+        const mascota = await getMascota(id);
+        return mascota;
     }
 );
 
-// Funcion para crear la mascota
 export const createMascotaAsync = createAsyncThunk(
     'mascotas/createMascota',
     async (payload: any) => {
-        const mascotas = await createMascota(payload);
-        return mascotas;
+        const mascota = await createMascota(payload);
+        return mascota;
     }
 );
 
-// Funcion para modificar la mascota
 export const updateMascotaAsync = createAsyncThunk(
     'mascotas/updateMascota',
     async (payload: any) => {
-        const mascotas = await updateMascota(payload.id, payload);
-        return mascotas;
+        const mascota = await updateMascota(payload.id, payload);
+        return mascota;
     }
 );
 
-// Funcion para borrar la mascota
 export const deleteMascotaAsync = createAsyncThunk(
     'mascotas/deleteMascota',
-    async (payload: any) => {
-        const mascotas = await deleteMascota(payload);
-        return mascotas;
+    async (id: string) => {
+        const response = await deleteMascota(id);
+        return { id, response };
     }
 );
 
@@ -50,93 +46,93 @@ export const mascotasSlice = createSlice({
     name: 'mascotas',
     initialState: {
         mascotas: [] as any[],
-        mascotaSelected: "",
-        status: "idle",
+        mascotaSelected: null as any | null,
+        status: 'idle',
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+        perPage: 5,
     },
     reducers: {
-        // Reducer síncrono para resetear el estado de la mascota seleccionada
         resetMascota: (state) => {
-            state.mascotaSelected = "";
-            state.status = "idle"
+            state.mascotaSelected = null;
+            state.status = 'idle';
         },
     },
     extraReducers: (builder) => {
         builder
-            // Manejo de estados para getMascotasAsync
+            // getMascotasAsync
             .addCase(getMascotasAsync.pending, (state) => {
                 state.status = 'loading';
             })
             .addCase(getMascotasAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.mascotas = action.payload;
-                console.log(state.mascotas);
+                state.mascotas = action.payload.data;
+                state.currentPage = action.payload.current_page; // <--- CAMBIO
+                state.totalPages = action.payload.last_page;     // <--- CAMBIO
+                state.totalItems = action.payload.total;         // <--- CAMBIO si existe
+                state.perPage = action.payload.per_page;         // <--- CAMBIO si existe
             })
+
             .addCase(getMascotasAsync.rejected, (state) => {
                 state.status = 'failed';
             })
 
-            // Manejo de estados para getMascotaAsync
+            // getMascotaAsync
             .addCase(getMascotaAsync.pending, (state) => {
-                state.status = 'loading',
-                    state.mascotaSelected = ""
+                state.status = 'loading';
+                state.mascotaSelected = null;
             })
             .addCase(getMascotaAsync.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                state.mascotaSelected = action.payload
+                state.status = 'succeeded';
+                state.mascotaSelected = action.payload;
             })
 
-            // Manejo de estados para updateMascotaAsync
-            .addCase(updateMascotaAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(updateMascotaAsync.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                // Actualiza la mascota en el array de mascotas
-                const prevState = { ...state }
-                //Actualiza la mascota en el array de  las mascoats
-                prevState.mascotas = prevState.mascotas.map((mascota: any) => {
-                    if (mascota.id == action.payload.id) {
-                        mascota = action.payload
-                    }
-                    return mascota
-                })
-                console.log(action.payload);
-                state.mascotas = prevState.mascotas
-            })
-
-            // Manejo de estados para deleteMascotaAsync
-            .addCase(deleteMascotaAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(deleteMascotaAsync.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                const prevState = { ...state }
-                prevState.mascotas = prevState.mascotas.filter((mascota: any) => {
-                    if (mascota.id != action.payload.id) {
-                        return mascota
-                    }
-                })
-                console.log(action.payload);
-                //Elimina la mascota del array
-                state.mascotas = prevState.mascotas
-            })
-
-            // Manejo de estados para createMascotaAsync
+            // createMascotaAsync
             .addCase(createMascotaAsync.pending, (state) => {
-                state.status = 'loading'
+                state.status = 'loading';
             })
             .addCase(createMascotaAsync.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                const newState = {
-                    ...state,
-                    //Añade la nueva mascota al array
-                    mascotas: [...state.mascotas, action.payload]
+                state.status = 'succeeded';
+                // Cuando creamos una mascota, podrías recargar la página 1 o añadir directamente:
+                state.mascotas.unshift(action.payload); // Añadimos arriba
+                state.totalItems += 1;
+                // Opcional: si supera el perPage, remover el último para mantener el tamaño
+                if (state.mascotas.length > state.perPage) {
+                    state.mascotas.pop();
                 }
-                state.mascotas = newState.mascotas
+            })
+
+            // updateMascotaAsync
+            .addCase(updateMascotaAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateMascotaAsync.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.mascotas = state.mascotas.map((mascota) =>
+                    mascota.id === action.payload.id ? action.payload : mascota
+                );
+            })
+
+            // deleteMascotaAsync
+            .addCase(deleteMascotaAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(deleteMascotaAsync.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.mascotas = state.mascotas.filter(
+                    (mascota) => mascota.id !== action.payload.id
+                );
+                state.totalItems -= 1;
+
+                // Si tras borrar, la página queda vacía y no es la primera, bajamos página
+                if (state.mascotas.length === 0 && state.currentPage > 1) {
+                    state.currentPage -= 1;
+                }
             });
-    }
-})
+    },
+});
 
-export const { resetMascota } = mascotasSlice.actions
+export const { resetMascota } = mascotasSlice.actions;
 
-export default mascotasSlice.reducer
+export default mascotasSlice.reducer;

@@ -110,6 +110,26 @@ h1 {
     color: white;
 }
 
+.tituloYBoton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.paginationInfo {
+  font-weight: bold;
+}
+
+
 @media (max-width: 768px) {
     .mascotasContainer {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

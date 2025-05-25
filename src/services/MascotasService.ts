@@ -3,18 +3,22 @@ import { getToken } from "./LoginService";
 
 const baseUrl = 'http://localhost:8000/api/mascotas'
 
-// Obtener todas las mascotas
-export const getMascotas = async () => {
+export const getMascotas = async (page = 1, perPage = 5) => {
     const config = {
         headers: {
             Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            page,
+            perPage
         }
     }
-    const res = await axios.get(baseUrl, config);
+    const res = await axios.get(`${baseUrl}/paginadas`, config);
     console.log(res.data);
 
-    return res.data
+    return res.data;
 }
+
 
 // Obtener una mascota específica por ID
 export const getMascota = async (id: string) => {
