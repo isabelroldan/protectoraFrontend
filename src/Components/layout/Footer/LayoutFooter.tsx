@@ -29,7 +29,7 @@ function LayoutFooter() {
                 </Row>
                 <Row>
                     <Col className={styles.footerBottom}>
-                        <p>&copy; 2023 Protectora de Animales. Todos los derechos reservados.</p>
+                        <p>&copy; 2025 Protectora de Animales. Todos los derechos reservados.</p>
                     </Col>
                 </Row>
             </Container>
