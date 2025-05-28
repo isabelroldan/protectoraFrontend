@@ -2,13 +2,26 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getMascotas, getMascota, updateMascota, deleteMascota, createMascota } from '../../services/MascotasService';
 
 // Thunks para acciones asincrónicas
-export const getMascotasAsync = createAsyncThunk(
+/* export const getMascotasAsync = createAsyncThunk(
     'mascotas/getMascotas',
     async ({ page = 1, perPage = 5 }: { page?: number; perPage?: number }) => {
         const response = await getMascotas(page, perPage);
         return response; // { data, currentPage, totalPages, totalItems, perPage }
     }
+); */
+
+export const getMascotasAsync = createAsyncThunk(
+    'mascotas/getMascotas',
+    async ({
+        page = 1,
+        perPage = 5,
+        search = ''
+    }: { page?: number; perPage?: number; search?: string }) => {
+        const response = await getMascotas(page, perPage, search);
+        return response;
+    }
 );
+
 
 export const getMascotaAsync = createAsyncThunk(
     'mascotas/getMascota',

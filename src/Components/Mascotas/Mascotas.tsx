@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Modal, Button } from "react-bootstrap";
+import { Container, Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
@@ -10,6 +10,8 @@ import loaderGif from '/images/loader.gif';
 
 function Mascotas() {
     const [show, setShow] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    const [search, setSearch] = useState("");
     const [deleteId, setDeleteId] = useState("");
     const [page, setPage] = useState(1);
     const perPage = 5;
@@ -22,8 +24,8 @@ function Mascotas() {
 
     useEffect(() => {
         dispatch(resetMascota());
-        dispatch(getMascotasAsync({ page, perPage }));
-    }, [dispatch, page]);
+        dispatch(getMascotasAsync({ page, perPage, search }));
+    }, [dispatch, page, search]);
 
     const handleClose = () => {
         setDeleteId("");
@@ -36,22 +38,16 @@ function Mascotas() {
     };
 
     const handleDelete = () => {
-        dispatch(deleteMascotaAsync(deleteId))
-            .then(() => {
-                setShow(false);
-                // Después de borrar, recarga la página actual.
-                // Nota: si borraste la última mascota de la página, el slice bajará la página automáticamente
-                dispatch(getMascotasAsync({ page, perPage }));
-            });
+        dispatch(deleteMascotaAsync(deleteId)).then(() => {
+            setShow(false);
+            dispatch(getMascotasAsync({ page, perPage, search }));
+        });
     };
 
     const getImageSrc = (especie: string) => {
         const especieLower = especie.toLowerCase();
-        if (especieLower === 'perro' || especieLower === 'perra') {
-            return '/images/perro.jpg';
-        } else if (especieLower === 'gato' || especieLower === 'gata') {
-            return '/images/gato.jpg';
-        }
+        if (especieLower === 'perro' || especieLower === 'perra') return '/images/perro.jpg';
+        if (especieLower === 'gato' || especieLower === 'gata') return '/images/gato.jpg';
         return '/images/default.jpg';
     };
 
@@ -62,9 +58,23 @@ function Mascotas() {
         if (page < totalPages) setPage(page + 1);
     };
 
+    // Ejecutar búsqueda manualmente con botón o tecla Enter
+    const executeSearch = () => {
+        setPage(1);
+        setSearch(searchInput.trim());
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            executeSearch();
+        }
+    };
+
     return (
         <Layout>
-            <Container className={styles.container}>
+            {/* Container alineado a la derecha */}
+            <Container className={styles.container} style={{ textAlign: "right" }}>
                 <div className={styles.tituloYBoton}>
                     <h1>Listado de Mascotas</h1>
                     <Link className={`${styles.btn} ${styles.btnVer} ${styles.btnCrear}`} to="/mascotas/create">
@@ -72,13 +82,25 @@ function Mascotas() {
                     </Link>
                 </div>
 
+                {/* Input de búsqueda con botón de lupa */}
+                <InputGroup className={styles.buscador} style={{ maxWidth: 300, marginLeft: "auto", marginBottom: "1rem" }}>
+                    <FormControl
+                        placeholder=""
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <Button variant="outline-secondary" onClick={executeSearch} aria-label="Buscar">
+                        🔍
+                    </Button>
+                </InputGroup>
 
                 {status === "loading" ? (
                     <div className={styles.loaderContainer}>
                         <img src={loaderGif} alt="Cargando" className={styles.loaderGif} />
                     </div>
                 ) : (
-                    <div className={styles.mascotasContainer}>
+                    <div className={styles.mascotasContainer} style={{ justifyContent: "flex-end" }}>
                         {Array.isArray(mascotas) && mascotas.length > 0 ? (
                             mascotas.map((mascota: any) => (
                                 <div key={mascota.id} className={styles.mascotaCard}>
@@ -111,7 +133,7 @@ function Mascotas() {
                 )}
 
                 {/* Paginación */}
-                <div className={styles.pagination}>
+                <div className={styles.pagination} style={{ justifyContent: "flex-end" }}>
                     <button
                         className={styles.btn}
                         onClick={handlePrevPage}
@@ -128,7 +150,6 @@ function Mascotas() {
                         Siguiente →
                     </button>
                 </div>
-
 
                 {/* Modal Confirmación Borrado */}
                 <Modal show={show} onHide={handleClose}>
