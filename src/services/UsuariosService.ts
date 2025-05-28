@@ -4,7 +4,7 @@ import { getToken } from "./LoginService";
 const baseUrl = 'http://localhost:8000/api/usuarios'
 
 // Obtener todos los usuarios
-export const getUsuarios = async () => {
+/* export const getUsuarios = async () => {
     const config = {
         headers: {
             Authorization: `Bearer ${getToken()}`
@@ -14,7 +14,28 @@ export const getUsuarios = async () => {
     console.log(res.data);
 
     return res.data
-}
+} */
+
+export const getUsuarios = async (
+    page = 1,
+    perPage = 5,
+    search = ''
+) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            page,
+            perPage,
+            ...(search ? { search } : {})
+        }
+    };
+
+    const res = await axios.get(`${baseUrl}/paginados`, config);
+    console.log(res.data); // Debug opcional
+    return res.data;
+};
 
 // Obtener un usuario específico por ID
 export const getUsuario = async (id: string) => {

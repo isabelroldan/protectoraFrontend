@@ -2,11 +2,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getUsuarios, getUsuario, updateUsuario, deleteUsuario, createUsuario } from '../../services/UsuariosService';
 
 // Acciones asíncronas para operaciones CRUD de usuarios
-export const getUsuariosAsync = createAsyncThunk(
+/* export const getUsuariosAsync = createAsyncThunk(
     'usuarios/getUsuarios',
     async () => {
         const usuarios = await getUsuarios();
         return usuarios;
+    }
+); */
+
+export const getUsuariosAsync = createAsyncThunk(
+    "usuarios/getUsuarios",
+    async ({
+        page = 1,
+        perPage = 5,
+        search = ''
+    }: { page?: number; perPage?: number; search?: string }) => {
+        const response = await getUsuarios(page, perPage, search);
+        return response;
     }
 );
 
@@ -48,6 +60,10 @@ export const usuariosSlice = createSlice({
         usuarios: [] as any[],
         usuarioSelected: "",
         status: "idle",
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+        perPage: 5,
     },
     reducers: {
         // Reducer síncrono para resetear el estado del usuario seleccionado
@@ -64,7 +80,11 @@ export const usuariosSlice = createSlice({
             })
             .addCase(getUsuariosAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.usuarios = action.payload;
+                state.usuarios = action.payload.data;
+                state.currentPage = action.payload.current_page; // <--- CAMBIO
+                state.totalPages = action.payload.last_page;     // <--- CAMBIO
+                state.totalItems = action.payload.total;         // <--- CAMBIO si existe
+                state.perPage = action.payload.per_page;    
                 console.log(state.usuarios);
             })
             .addCase(getUsuariosAsync.rejected, (state) => {
