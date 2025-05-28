@@ -5,11 +5,15 @@ import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, updateS
 
 export const getSolicitudesAsync = createAsyncThunk(
     'solicitudes/getSolicitudes',
-    async () => {
-        const solicitudes = await getSolicitudes();
-        return solicitudes;
-    }
-);
+    async ({
+            page = 1,
+            perPage = 5,
+            search = ''
+        }: { page?: number; perPage?: number; search?: string }) => {
+            const response = await getSolicitudes(page, perPage, search);
+            return response;
+        }
+    );
 
 export const getSolicitudAsync = createAsyncThunk(
     'mascotas/getSolicitud',
@@ -50,6 +54,10 @@ export const solicitudesSlice = createSlice({
         solicitudes: [] as any[],
         solicitudSelected: "",
         status: "idle",
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+        perPage: 5,
     },
     reducers: {
         // Reducer síncrono para resetear el estado de la solicitud seleccionada
@@ -66,7 +74,11 @@ export const solicitudesSlice = createSlice({
             })
             .addCase(getSolicitudesAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.solicitudes = action.payload;
+                state.solicitudes = action.payload.data;
+                state.currentPage = action.payload.current_page; // <--- CAMBIO
+                state.totalPages = action.payload.last_page;     // <--- CAMBIO
+                state.totalItems = action.payload.total;         // <--- CAMBIO si existe
+                state.perPage = action.payload.per_page;  
                 console.log(state.solicitudes);
             })
 

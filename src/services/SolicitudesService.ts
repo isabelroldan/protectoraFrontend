@@ -4,17 +4,26 @@ import { getToken } from "./LoginService";
 const baseUrl = 'http://localhost:8000/api/solicitudes'
 
 // Obtener todas las solicitudes
-export const getSolicitudes = async () => {
+export const getSolicitudes = async (
+    page = 1,
+    perPage = 5,
+    search = ''
+) => {
     const config = {
         headers: {
             Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            page,
+            perPage,
+            ...(search ? { search } : {})
         }
-    }
-    const res = await axios.get(baseUrl, config);
-    console.log(res.data);
+    };
 
-    return res.data
-}
+    const res = await axios.get(`${baseUrl}/paginadas`, config);
+    console.log(res.data); // Debug opcional
+    return res.data;
+};
 
 // Obtener una solicitud específica por ID
 export const getSolicitud = async (id: string) => {
