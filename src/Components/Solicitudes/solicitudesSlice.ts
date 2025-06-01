@@ -1,19 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, updateSolicitud } from '../../services/SolicitudesService';
+import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, getAllSolicitudes, updateSolicitud } from '../../services/SolicitudesService';
 
 // Acciones asíncronas para operaciones CRUD de solicitudes
 
 export const getSolicitudesAsync = createAsyncThunk(
     'solicitudes/getSolicitudes',
     async ({
-            page = 1,
-            perPage = 5,
-            search = ''
-        }: { page?: number; perPage?: number; search?: string }) => {
-            const response = await getSolicitudes(page, perPage, search);
-            return response;
-        }
-    );
+        page = 1,
+        perPage = 5,
+        search = ''
+    }: { page?: number; perPage?: number; search?: string }) => {
+        const response = await getSolicitudes(page, perPage, search);
+        return response;
+    }
+);
+
+export const getAllSolicitudesAsync = createAsyncThunk(
+    'solicitudes/getAllSolicitudes',
+    async () => {
+        const response = await getAllSolicitudes(); // sin paginación
+        return response;
+    }
+);
 
 export const getSolicitudAsync = createAsyncThunk(
     'mascotas/getSolicitud',
@@ -68,7 +76,7 @@ export const solicitudesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        // Manejo de estados para getSolicitudesAsync
+            // Manejo de estados para getSolicitudesAsync
             .addCase(getSolicitudesAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -78,9 +86,18 @@ export const solicitudesSlice = createSlice({
                 state.currentPage = action.payload.current_page; // <--- CAMBIO
                 state.totalPages = action.payload.last_page;     // <--- CAMBIO
                 state.totalItems = action.payload.total;         // <--- CAMBIO si existe
-                state.perPage = action.payload.per_page;  
+                state.perPage = action.payload.per_page;
                 console.log(state.solicitudes);
             })
+
+            .addCase(getAllSolicitudesAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getAllSolicitudesAsync.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.solicitudes = action.payload; // aquí es un array simple
+            })
+
 
             // Manejo de estados para getSolicitudAsync
             .addCase(getSolicitudAsync.pending, (state) => {

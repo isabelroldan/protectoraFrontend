@@ -25,6 +25,18 @@ export const getSolicitudes = async (
     return res.data;
 };
 
+// Obtener TODAS las solicitudes sin paginación (para el calendario)
+export const getAllSolicitudes = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+    const res = await axios.get('http://localhost:8000/api/solicitudes', config);
+    return res.data;
+};
+
+
 // Obtener una solicitud específica por ID
 export const getSolicitud = async (id: string) => {
     const config = {
