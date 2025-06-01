@@ -37,6 +37,18 @@ export const getUsuarios = async (
     return res.data;
 };
 
+// Obtener TODAS las solicitudes sin paginación (para el calendario)
+export const getAllUsuarios = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+    const res = await axios.get('http://localhost:8000/api/usuarios', config);
+    return res.data;
+};
+
+
 // Obtener un usuario específico por ID
 export const getUsuario = async (id: string) => {
     const config = {

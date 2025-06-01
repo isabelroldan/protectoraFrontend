@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getUsuarios, getUsuario, updateUsuario, deleteUsuario, createUsuario } from '../../services/UsuariosService';
+import { getUsuarios, getUsuario, updateUsuario, deleteUsuario, createUsuario, getAllUsuarios } from '../../services/UsuariosService';
 
 // Acciones asíncronas para operaciones CRUD de usuarios
 /* export const getUsuariosAsync = createAsyncThunk(
@@ -18,6 +18,14 @@ export const getUsuariosAsync = createAsyncThunk(
         search = ''
     }: { page?: number; perPage?: number; search?: string }) => {
         const response = await getUsuarios(page, perPage, search);
+        return response;
+    }
+);
+
+export const getAllUsuariosAsync = createAsyncThunk(
+    'solicitudes/getAllUsuarios',
+    async () => {
+        const response = await getAllUsuarios(); // sin paginación
         return response;
     }
 );
@@ -90,6 +98,14 @@ export const usuariosSlice = createSlice({
             .addCase(getUsuariosAsync.rejected, (state) => {
                 state.status = 'failed';
             })
+
+            .addCase(getAllUsuariosAsync.pending, (state) => {
+                            state.status = 'loading';
+                        })
+                        .addCase(getAllUsuariosAsync.fulfilled, (state, action) => {
+                            state.status = 'succeeded';
+                            state.usuarios = action.payload; // aquí es un array simple
+                        })
 
             // Manejo de estados para getUsuarioAsync
             .addCase(getUsuarioAsync.pending, (state) => {

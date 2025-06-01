@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getMascotas, getMascota, updateMascota, deleteMascota, createMascota } from '../../services/MascotasService';
+import { getMascotas, getMascota, updateMascota, deleteMascota, createMascota, getAllMascotas } from '../../services/MascotasService';
 
 // Thunks para acciones asincrónicas
 /* export const getMascotasAsync = createAsyncThunk(
@@ -18,6 +18,14 @@ export const getMascotasAsync = createAsyncThunk(
         search = ''
     }: { page?: number; perPage?: number; search?: string }) => {
         const response = await getMascotas(page, perPage, search);
+        return response;
+    }
+);
+
+export const getAllMascotasAsync = createAsyncThunk(
+    'solicitudes/getAllMascotas',
+    async () => {
+        const response = await getAllMascotas(); // sin paginación
         return response;
     }
 );
@@ -85,6 +93,14 @@ export const mascotasSlice = createSlice({
                 state.totalPages = action.payload.last_page;     // <--- CAMBIO
                 state.totalItems = action.payload.total;         // <--- CAMBIO si existe
                 state.perPage = action.payload.per_page;         // <--- CAMBIO si existe
+            })
+
+            .addCase(getAllMascotasAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getAllMascotasAsync.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.mascotas = action.payload; // aquí es un array simple
             })
 
             .addCase(getMascotasAsync.rejected, (state) => {

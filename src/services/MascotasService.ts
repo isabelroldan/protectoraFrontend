@@ -41,6 +41,18 @@ const baseUrl = 'http://localhost:8000/api/mascotas'
     return res.data;
 };
 
+// Obtener TODAS las solicitudes sin paginación (para el calendario)
+export const getAllMascotas = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+    const res = await axios.get('http://localhost:8000/api/mascotas', config);
+    return res.data;
+};
+
+
 
 
 // Obtener una mascota específica por ID
