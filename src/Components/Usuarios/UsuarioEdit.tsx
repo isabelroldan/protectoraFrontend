@@ -6,6 +6,7 @@ import Layout from "../layout/Layout";
 import { createUsuarioAsync, getUsuarioAsync, updateUsuarioAsync } from "./usuariosSlice";
 import styles from "./UsuariosEdit.module.css";
 import loaderGif from '/images/loader.gif';
+import toast from "react-hot-toast";
 
 function UsuariosEdit() {
     // Obtiene el Id del usuario de los parámetros de la URL
@@ -28,7 +29,7 @@ function UsuariosEdit() {
     }, [id, dispatch]);
 
     // Maneja el envío del formulario
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    /* const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const payload = doPayload(event);
         if (isEdit) {
@@ -37,7 +38,28 @@ function UsuariosEdit() {
             dispatch(createUsuarioAsync(payload));
         }
         navigateTo('/usuarios');
-    };
+    }; */
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const payload = doPayload(event);
+
+    try {
+        if (isEdit) {
+            await dispatch(updateUsuarioAsync(payload)).unwrap();
+            toast.success("Usuario actualizado correctamente");
+        } else {
+            await dispatch(createUsuarioAsync(payload)).unwrap();
+            toast.success("Usuario creado correctamente");
+        }
+
+        navigateTo('/usuarios');
+    } catch (error) {
+        toast.error("Error al procesar el usuario");
+        console.error("Error:", error);
+    }
+};
+
 
     // Prepara el payload para enviar al backend
     const doPayload = (event: React.FormEvent<HTMLFormElement>) => {

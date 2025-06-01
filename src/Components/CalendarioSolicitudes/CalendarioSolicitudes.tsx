@@ -6,7 +6,7 @@ import { parseISO, format as dfFormat, parse as dfParse, startOfWeek as dfStartO
 import { es } from "date-fns/locale";
 import type { Locale } from "date-fns";
 import Layout from "../layout/Layout";
-import { getAllSolicitudesAsync, getSolicitudesAsync } from "../Solicitudes/solicitudesSlice";
+import { getAllSolicitudesAsync } from "../Solicitudes/solicitudesSlice";
 import Modal from "react-modal";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 

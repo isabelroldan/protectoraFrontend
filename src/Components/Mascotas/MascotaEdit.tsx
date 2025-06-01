@@ -6,6 +6,7 @@ import Layout from "../layout/Layout";
 import { createMascotaAsync, getMascotaAsync, updateMascotaAsync } from "./mascotasSlice";
 import styles from "./MascotasEdit.module.css";
 import loaderGif from '/images/loader.gif';
+import toast from "react-hot-toast";
 
 function MascotasEdit() {
     const { id } = useParams(); // Obtiene el ID de la mascota de los parámetros de la URL
@@ -26,7 +27,7 @@ function MascotasEdit() {
     }, [id, dispatch]);
 
     // Maneja el envío del formulario
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    /* const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const payload = doPayload(event);
         if (isEdit) {
@@ -35,7 +36,30 @@ function MascotasEdit() {
             dispatch(createMascotaAsync(payload));
         }
         navigateTo('/mascotas');
+    }; */
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const payload = doPayload(event);
+
+        try {
+
+            if (isEdit) {
+                await dispatch(updateMascotaAsync(payload));
+                toast.success("Mascota actualizada correctamente");
+            } else {
+                await dispatch(createMascotaAsync(payload));
+                toast.success("Mascota creada correctamente");
+            }
+        } catch (error) {
+            toast.error("Error al procesar la solicitud");
+            console.error("Error:", error);
+        }
+
+
+        navigateTo('/mascotas');
     };
+
 
     // Prepara el payload para enviar al backend
     const doPayload = (event: React.FormEvent<HTMLFormElement>) => {

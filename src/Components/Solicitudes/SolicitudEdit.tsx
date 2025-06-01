@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Layout from "../layout/Layout";
 import { createSolicitudAsync, getSolicitudAsync, updateSolicitudAsync } from "./solicitudesSlice";
-import { getUsuariosAsync } from "../Usuarios/usuariosSlice";
-import { getMascotasAsync } from "../Mascotas/mascotasSlice";
+import { getAllUsuariosAsync } from "../Usuarios/usuariosSlice";
 import styles from "./SolicitudEdit.module.css";
 import loaderGif from '/images/loader.gif';
+import toast from "react-hot-toast";
+import { getAllMascotasAsync } from "../Mascotas/mascotasSlice";
 
 function SolicitudEdit() {
     const { id } = useParams(); // Obtiene el ID de la solicitud de los parámetros de la URL
@@ -23,8 +24,8 @@ function SolicitudEdit() {
 
     // Efecto para cargar datos necesarios
     useEffect(() => {
-        dispatch(getUsuariosAsync()); // Carga la lista de usuarios
-        dispatch(getMascotasAsync()); // Carga la lista de mascotas
+        dispatch(getAllMascotasAsync()); // Carga la lista de usuarios
+        dispatch(getAllUsuariosAsync()); // Carga la lista de mascotas
         if (id) {
             setIsEdit(true);
             dispatch(getSolicitudAsync(id)).then(() => setLoading(false)); // Carga la solicitud específica si es una edición
@@ -34,7 +35,7 @@ function SolicitudEdit() {
     }, [id, dispatch]);
 
     // Maneja el envío del formulario
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    /* const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const payload = doPayload(event);
         if (isEdit) {
@@ -43,7 +44,28 @@ function SolicitudEdit() {
             dispatch(createSolicitudAsync(payload));
         }
         navigateTo('/solicitudes');
-    };
+    }; */
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const payload = doPayload(event);
+
+    try {
+        if (isEdit) {
+            await dispatch(updateSolicitudAsync(payload)).unwrap();
+            toast.success("Solicitud actualizada correctamente");
+        } else {
+            await dispatch(createSolicitudAsync(payload)).unwrap();
+            toast.success("Solicitud creada correctamente");
+        }
+
+        navigateTo('/solicitudes');
+    } catch (error) {
+        toast.error("Error al procesar la solicitud");
+        console.error("Error:", error);
+    }
+};
+
 
     // Prepara el payload para enviar al backend
     const doPayload = (event: React.FormEvent<HTMLFormElement>) => {

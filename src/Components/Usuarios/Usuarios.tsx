@@ -113,6 +113,7 @@ import {
 } from "./usuariosSlice";
 import styles from "./Usuarios.module.css";
 import loaderGif from "/images/loader.gif";
+import toast from "react-hot-toast";
 
 function Usuarios() {
     const [show, setShow] = useState(false);
@@ -147,6 +148,7 @@ function Usuarios() {
         dispatch(deleteUsuarioAsync(deleteId)).then(() => {
             setShow(false);
             dispatch(getUsuariosAsync({ page, perPage, search }));
+            toast.success("Usuario eliminado correctamente 👤");
         });
     };
 

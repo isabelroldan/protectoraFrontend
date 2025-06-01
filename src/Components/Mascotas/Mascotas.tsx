@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import { deleteMascotaAsync, getMascotasAsync, resetMascota } from "./mascotasSlice";
 import styles from "./Mascotas.module.css";
 import loaderGif from '/images/loader.gif';
+import toast from "react-hot-toast";
 
 function Mascotas() {
     const [show, setShow] = useState(false);
@@ -37,12 +38,20 @@ function Mascotas() {
         setShow(true);
     };
 
-    const handleDelete = () => {
+    /* const handleDelete = () => {
         dispatch(deleteMascotaAsync(deleteId)).then(() => {
             setShow(false);
             dispatch(getMascotasAsync({ page, perPage, search }));
         });
-    };
+    }; */
+
+    const handleDelete = () => {
+        dispatch(deleteMascotaAsync(deleteId)).then(() => {
+            setShow(false);
+            dispatch(getMascotasAsync({ page, perPage, search }));
+            toast.success("Mascota eliminada correctamente 🐾");
+        });
+    }; 
 
     const getImageSrc = (especie: string) => {
         const especieLower = especie.toLowerCase();

@@ -11,6 +11,7 @@ import {
 } from "./solicitudesSlice";
 import styles from "./Solicitudes.module.css";
 import loaderGif from "/images/loader.gif";
+import toast from "react-hot-toast";
 
 function Solicitudes() {
     const [show, setShow] = useState(false);
@@ -45,6 +46,8 @@ function Solicitudes() {
         dispatch(deleteSolicitudAsync(deleteId)).then(() => {
             setShow(false);
             dispatch(getSolicitudesAsync({ page, perPage, search }));
+            toast.success("Solicitud eliminada correctamente 📄");
+
         });
     };
 
