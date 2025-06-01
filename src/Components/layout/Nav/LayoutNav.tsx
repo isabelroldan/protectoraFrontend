@@ -33,14 +33,28 @@ function LayoutNav() {
                         Mascotas
                     </Link>
                 </li>
-                <li className={styles.navItem}>
+                {/* <li className={styles.navItem}>
                     <Link
                         to="/solicitudes"
                         className={location.pathname === '/solicitudes' ? styles.active : ''}
                     >
                         Solicitudes
                     </Link>
+                </li> */}
+
+                <li className={styles.navItem}>
+                    <Link
+                        to={rol === "usuario" ? "/mis-solicitudes" : "/solicitudes"}
+                        className={
+                            location.pathname === "/solicitudes" || location.pathname === "/mis-solicitudes"
+                                ? styles.active
+                                : ""
+                        }
+                    >
+                        Solicitudes
+                    </Link>
                 </li>
+
 
                 {/* Mostrar solo si el rol NO es "usuario" */}
                 {rol !== 'usuario' && (
@@ -54,7 +68,7 @@ function LayoutNav() {
                     </li>
                 )}
 
-                {rol !== 'usuario' &&  (
+                {rol !== 'usuario' && (
                     <li className={styles.navItem}>
                         <Link to="/calendario" className={location.pathname === '/calendario' ? styles.active : ''}>
                             Calendario

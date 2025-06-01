@@ -11,6 +11,7 @@ import Solicitudes from './Solicitudes/Solicitudes';
 import SolicitudSee from './Solicitudes/SolicitudSee';
 import SolicitudEdit from './Solicitudes/SolicitudEdit';
 import CalendarioSolicitudes from './CalendarioSolicitudes/CalendarioSolicitudes';
+import MisSolicitudes from './Solicitudes/MisSolicitudes';
 
 function Router() {
 
@@ -36,6 +37,8 @@ function Router() {
                     <Route path='/solicitudes/edit/:id' element={<SolicitudEdit />}></Route>
 
                     <Route path="/calendario" element={<CalendarioSolicitudes />} />
+
+                    <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
 
                 </Routes>
             </BrowserRouter>

@@ -36,6 +36,18 @@ export const getAllSolicitudes = async () => {
     return res.data;
 };
 
+// Obtener las solicitudes del usuario autenticado (para rol 'usuario')
+export const getMisSolicitudes = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+
+    const res = await axios.get(`http://localhost:8000/api/mis-solicitudes`, config);
+    console.log(res.data);
+    return res.data;
+};
 
 // Obtener una solicitud específica por ID
 export const getSolicitud = async (id: string) => {

@@ -42,6 +42,7 @@ export const loginSlice = createSlice({
         // Guardar token y rol
         sessionStorage.setItem("token", state.token);
         sessionStorage.setItem("rol", action.payload.user.rol);
+        sessionStorage.setItem("id", action.payload.user.id);
 
         console.log("ROL:", action.payload.user.rol);
       })

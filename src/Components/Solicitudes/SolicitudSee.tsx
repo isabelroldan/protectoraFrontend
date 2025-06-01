@@ -12,6 +12,7 @@ function SolicitudSee() {
     const solicitudes = useSelector((state: any) => state.solicitudes.solicitudes);
     // Estado local para almacenar la solicitud seleccionada
     const [solicitud, setSolicitud] = useState<any>();
+    const [rol] = useState(sessionStorage.getItem("rol"));
 
     // Efecto para encontrar y establecer la solicitud seleccionada
     useEffect(() => {
@@ -51,7 +52,7 @@ function SolicitudSee() {
                         </div>
                     </div>
                 )}
-                <Link to="/solicitudes" className={styles.btnVolver}>Volver al Listado</Link>
+                <Link to={rol === "usuario" ? "/mis-solicitudes" : "/solicitudes"} className={styles.btnVolver}>Volver al Listado</Link>
             </div>
         </Layout>
     );

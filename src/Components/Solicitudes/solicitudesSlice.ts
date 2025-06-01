@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, getAllSolicitudes, updateSolicitud } from '../../services/SolicitudesService';
+import { createSolicitud, deleteSolicitud, getSolicitud, getSolicitudes, getAllSolicitudes, updateSolicitud, getMisSolicitudes } from '../../services/SolicitudesService';
 
 // Acciones asíncronas para operaciones CRUD de solicitudes
 
@@ -22,6 +22,15 @@ export const getAllSolicitudesAsync = createAsyncThunk(
         return response;
     }
 );
+
+export const getMisSolicitudesAsync = createAsyncThunk(
+    'solicitudes/getMisSolicitudes',
+    async () => {
+        const response = await getMisSolicitudes();
+        return response;
+    }
+);
+
 
 export const getSolicitudAsync = createAsyncThunk(
     'mascotas/getSolicitud',
@@ -90,6 +99,7 @@ export const solicitudesSlice = createSlice({
                 console.log(state.solicitudes);
             })
 
+            // Manejo de estados para getAllSolicitudesAsync
             .addCase(getAllSolicitudesAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -98,6 +108,14 @@ export const solicitudesSlice = createSlice({
                 state.solicitudes = action.payload; // aquí es un array simple
             })
 
+            // Manejo de estados para getMisSolicitudesAsync
+            .addCase(getMisSolicitudesAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getMisSolicitudesAsync.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.solicitudes = action.payload; // respuesta es array simple
+            })
 
             // Manejo de estados para getSolicitudAsync
             .addCase(getSolicitudAsync.pending, (state) => {
