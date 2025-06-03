@@ -1,7 +1,9 @@
 import axios from "axios";
 import { getToken } from "./LoginService";
 
-const baseUrl = 'http://localhost:8000/api/usuarios'
+// const baseUrl = 'http://localhost:8000/api/usuarios'
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+
 
 // Obtener todos los usuarios
 /* export const getUsuarios = async () => {
@@ -44,7 +46,8 @@ export const getAllUsuarios = async () => {
             Authorization: `Bearer ${getToken()}`
         }
     };
-    const res = await axios.get('http://localhost:8000/api/usuarios', config);
+    const res = await axios.get(`${baseUrl}/usuarios`, config);
+    // const res = await axios.get('http://localhost:8000/api/usuarios', config);
     return res.data;
 };
 

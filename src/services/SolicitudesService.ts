@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getToken } from "./LoginService";
 
-const baseUrl = 'http://localhost:8000/api/solicitudes'
+// const baseUrl = 'http://localhost:8000/api/solicitudes'
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 // Obtener todas las solicitudes
 export const getSolicitudes = async (
@@ -32,7 +33,8 @@ export const getAllSolicitudes = async () => {
             Authorization: `Bearer ${getToken()}`
         }
     };
-    const res = await axios.get('http://localhost:8000/api/solicitudes', config);
+    const res = await axios.get(`${baseUrl}/solicitudes`, config);
+    // const res = await axios.get('http://localhost:8000/api/solicitudes', config);
     return res.data;
 };
 
@@ -44,7 +46,8 @@ export const getMisSolicitudes = async () => {
         }
     };
 
-    const res = await axios.get(`http://localhost:8000/api/mis-solicitudes`, config);
+    const res = await axios.get(`${baseUrl}/mis-solicitudes`, config);
+    // const res = await axios.get(`http://localhost:8000/api/mis-solicitudes`, config);
     console.log(res.data);
     return res.data;
 };

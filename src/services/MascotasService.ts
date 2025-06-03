@@ -1,7 +1,9 @@
 import axios from "axios";
 import { getToken } from "./LoginService";
 
-const baseUrl = 'http://localhost:8000/api/mascotas'
+// const baseUrl = 'http://localhost:8000/api/mascotas'
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+
 
 /* export const getMascotas = async (page = 1, perPage = 5) => {
     const config = {
@@ -48,7 +50,8 @@ export const getAllMascotas = async () => {
             Authorization: `Bearer ${getToken()}`
         }
     };
-    const res = await axios.get('http://localhost:8000/api/mascotas', config);
+    const res = await axios.get(`${baseUrl}/mascotas`, config);
+    // const res = await axios.get('http://localhost:8000/api/mascotas', config);
     return res.data;
 };
 

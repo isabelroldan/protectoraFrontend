@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseUrl = 'http://localhost:8000/api'
+// const baseUrl = 'http://localhost:8000/api'
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+
 
 // Función para realizar el login
 export const doLogin = async (payload: any) => {
