@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./LoginService";
 
 // const baseUrl = 'http://localhost:8000/api/solicitudes'
-const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const baseUrl = 'https://protectora-backend.onrender.com/api';
 
 // Obtener todas las solicitudes
 export const getSolicitudes = async (
