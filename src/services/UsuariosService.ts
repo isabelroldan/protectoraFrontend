@@ -83,7 +83,7 @@ export const updateUsuario = async (id: string, payload: any) => {
         }
     }
     const res = await axios.put(`${baseUrl}/${id}`, payload, config);
-    console.log(res.data);
+    console.log("Service usuarios", res.data);
 
     return res.data
 }

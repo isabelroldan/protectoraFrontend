@@ -3,22 +3,24 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Layout from "../layout/Layout";
-import { createUsuarioAsync, getUsuarioAsync, updateUsuarioAsync } from "./usuariosSlice";
+import {
+    createUsuarioAsync,
+    getUsuarioAsync,
+    updateUsuarioAsync,
+} from "./usuariosSlice";
 import styles from "./UsuariosEdit.module.css";
-import loaderGif from '/images/loader.gif';
+import loaderGif from "/images/loader.gif";
 import toast from "react-hot-toast";
 
 function UsuariosEdit() {
-    // Obtiene el Id del usuario de los parámetros de la URL
     const { id } = useParams();
-    const [isEdit, setIsEdit] = useState(false); // Estado para determinar si es edición o creación
+    const [isEdit, setIsEdit] = useState(false);
+    const [esAdmin, setEsAdmin] = useState(false); // Nuevo estado para el rol
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const navigateTo = useNavigate();
-    // Obtiene el usuario seleccionado del estado de Redux
     const usuario = useSelector((state: any) => state.usuarios.usuarioSelected);
     const [loading, setLoading] = useState(true);
 
-    // Efecto para cargar los datos del usuario si es una edición
     useEffect(() => {
         if (id) {
             setIsEdit(true);
@@ -28,41 +30,40 @@ function UsuariosEdit() {
         }
     }, [id, dispatch]);
 
-    // Maneja el envío del formulario
-    /* const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const payload = doPayload(event);
-        if (isEdit) {
-            dispatch(updateUsuarioAsync(payload));
-        } else {
-            dispatch(createUsuarioAsync(payload));
+    useEffect(() => {
+        if (isEdit && usuario?.rol) {
+            setEsAdmin(usuario.rol !== "usuario"); // Activar switch si el rol es distinto a 'usuario'
         }
-        navigateTo('/usuarios');
-    }; */
+    }, [isEdit, usuario]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const payload = doPayload(event);
+        event.preventDefault();
+        console.log("Estado esAdmin al enviar:", esAdmin);
+        const payload = doPayload(event, esAdmin); // ✅ pasar esAdmin explícitamente
 
-    try {
-        if (isEdit) {
-            await dispatch(updateUsuarioAsync(payload)).unwrap();
-            toast.success("Usuario actualizado correctamente");
-        } else {
-            await dispatch(createUsuarioAsync(payload)).unwrap();
-            toast.success("Usuario creado correctamente");
+        try {
+            if (isEdit) {
+                await dispatch(updateUsuarioAsync(payload)).unwrap();
+                toast.success("Usuario actualizado correctamente");
+            } else {
+                await dispatch(createUsuarioAsync(payload)).unwrap();
+                toast.success("Usuario creado correctamente");
+            }
+            navigateTo("/usuarios");
+        } catch (error) {
+            toast.error("Error al procesar el usuario");
+            console.error("Error:", error);
         }
-
-        navigateTo('/usuarios');
-    } catch (error) {
-        toast.error("Error al procesar el usuario");
-        console.error("Error:", error);
-    }
-};
+    };
 
 
-    // Prepara el payload para enviar al backend
-    const doPayload = (event: React.FormEvent<HTMLFormElement>) => {
+    const doPayload = (
+        event: React.FormEvent<HTMLFormElement>,
+
+        esAdminChecked: boolean // ✅ se pasa como argumento
+    ) => {
+        console.log("Rol que se enviará:", esAdminChecked ? "admin" : "usuario");
+
         const target = event.target as typeof event.target & {
             name: { value: string };
             email: { value: string };
@@ -77,9 +78,11 @@ function UsuariosEdit() {
             password: target.password.value,
             direccion: target.direccion.value,
             telefono: target.telefono.value,
-            ...(isEdit ? { id } : {})
+            rol: esAdminChecked ? "admin" : "usuario", // ✅ ahora sí refleja el estado real
+            ...(isEdit ? { id } : {}),
         };
     };
+
 
     if (loading) {
         return (
@@ -92,29 +95,72 @@ function UsuariosEdit() {
     return (
         <Layout>
             <div className={styles.formContainer}>
-                <h1>{isEdit ? 'Editar Usuario' : 'Crear Usuario'}</h1>
+                <h1>{isEdit ? "Editar Usuario" : "Crear Usuario"}</h1>
                 <form onSubmit={handleSubmit} className={styles.form} autoComplete="off">
                     <label htmlFor="name">Nombre:</label>
-                    <input type="text" id="name" name="name" defaultValue={isEdit ? usuario.name : ''} />
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        defaultValue={isEdit ? usuario.name : ""}
+                    />
 
                     <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" autoComplete="email-edit" defaultValue={isEdit ? usuario.email : ''} />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autoComplete="email-edit"
+                        defaultValue={isEdit ? usuario.email : ""}
+                    />
 
                     <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" autoComplete="password-edit" />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        autoComplete="password-edit"
+                    />
 
                     <label htmlFor="direccion">Dirección:</label>
-                    <input type="text" id="direccion" name="direccion" defaultValue={isEdit ? usuario.direccion : ''} />
+                    <input
+                        type="text"
+                        id="direccion"
+                        name="direccion"
+                        defaultValue={isEdit ? usuario.direccion : ""}
+                    />
 
                     <label htmlFor="telefono">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" defaultValue={isEdit ? usuario.telefono : ''} />
+                    <input
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        defaultValue={isEdit ? usuario.telefono : ""}
+                    />
+
+                    <div className={styles.switchContainer}>
+                        <span>¿Es administrador?</span>
+                        <label className={styles.switch}>
+                            <input
+                                type="checkbox"
+                                id="rolSwitch"
+                                checked={esAdmin}
+                                onChange={() => setEsAdmin((prev) => !prev)}
+                            // disabled={!isEdit}
+                            />
+                            <span className={styles.slider}></span>
+                        </label>
+                    </div>
+
 
                     <button type="submit" className={styles.btnSubmit}>
-                        {isEdit ? 'Modificar Usuario' : 'Crear Usuario'}
+                        {isEdit ? "Modificar Usuario" : "Crear Usuario"}
                     </button>
                 </form>
 
-                <Link to="/usuarios" className={styles.btnVolver}>Volver al Listado</Link>
+                <Link to="/usuarios" className={styles.btnVolver}>
+                    Volver al Listado
+                </Link>
             </div>
         </Layout>
     );

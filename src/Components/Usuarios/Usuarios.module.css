@@ -128,6 +128,23 @@ h1 {
   font-weight: bold;
 }
 
+.adminCard {
+    background-color: #fff8de; /* Azul claro */
+    border-left: 5px solid #ffe382; /* Azul acento */
+    border-radius: 8px;
+}
+
+.adminBadge {
+    font-size: 0.75rem;
+    color: white;
+    background-color: #fcce28;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 0.5rem;
+    text-transform: capitalize;
+}
+
+
 @media (max-width: 768px) {
     .usuariosContainer {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

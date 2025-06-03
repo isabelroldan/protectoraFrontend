@@ -50,6 +50,7 @@ export const updateUsuarioAsync = createAsyncThunk(
     'usuarios/updateUsuario',
     async (payload: any) => {
         const usuarios = await updateUsuario(payload.id, payload);
+        console.log("Slice usuario", usuarios);
         return usuarios;
     }
 );
