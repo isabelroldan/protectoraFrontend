@@ -23,6 +23,8 @@ function Mascotas() {
     const currentPage = useSelector((state: any) => state.mascotas.currentPage);
     const totalPages = useSelector((state: any) => state.mascotas.totalPages);
 
+    const rol = sessionStorage.getItem("rol");
+
     useEffect(() => {
         dispatch(resetMascota());
         dispatch(getMascotasAsync({ page, perPage, search }));
@@ -38,20 +40,13 @@ function Mascotas() {
         setShow(true);
     };
 
-    /* const handleDelete = () => {
-        dispatch(deleteMascotaAsync(deleteId)).then(() => {
-            setShow(false);
-            dispatch(getMascotasAsync({ page, perPage, search }));
-        });
-    }; */
-
     const handleDelete = () => {
         dispatch(deleteMascotaAsync(deleteId)).then(() => {
             setShow(false);
             dispatch(getMascotasAsync({ page, perPage, search }));
             toast.success("Mascota eliminada correctamente 🐾");
         });
-    }; 
+    };
 
     const getImageSrc = (especie: string) => {
         const especieLower = especie.toLowerCase();
@@ -67,7 +62,6 @@ function Mascotas() {
         if (page < totalPages) setPage(page + 1);
     };
 
-    // Ejecutar búsqueda manualmente con botón o tecla Enter
     const executeSearch = () => {
         setPage(1);
         setSearch(searchInput.trim());
@@ -82,19 +76,19 @@ function Mascotas() {
 
     return (
         <Layout>
-            {/* Container alineado a la derecha */}
             <Container className={styles.container} style={{ textAlign: "right" }}>
                 <div className={styles.tituloYBoton}>
                     <h1>Listado de Mascotas</h1>
-                    <Link className={`${styles.btn} ${styles.btnVer} ${styles.btnCrear}`} to="/mascotas/create">
-                        Crear Mascota
-                    </Link>
+                    {/* Mostrar botón "Crear Mascota" solo si no es rol usuario */}
+                    {rol !== "usuario" && (
+                        <Link className={`${styles.btn} ${styles.btnVer} ${styles.btnCrear}`} to="/mascotas/create">
+                            Crear Mascota
+                        </Link>
+                    )}
                 </div>
 
-                {/* Input de búsqueda con botón de lupa */}
                 <InputGroup className={styles.buscador} style={{ maxWidth: 300, marginLeft: "auto", marginBottom: "1rem" }}>
                     <FormControl
-                        placeholder=""
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -129,8 +123,13 @@ function Mascotas() {
                                         <p><strong>Estado:</strong> {mascota.estado}</p>
                                         <div className={styles.acciones}>
                                             <Link className={`${styles.btn} ${styles.btnVer}`} to={`/mascotas/see/${mascota.id}`}>Ver Detalle</Link>
-                                            <Link className={`${styles.btn} ${styles.btnEditar}`} to={`/mascotas/edit/${mascota.id}`}>Editar</Link>
-                                            <button className={`${styles.btn} ${styles.btnBorrar}`} onClick={() => handleShow(mascota.id)}>Borrar</button>
+                                            {/* Solo mostrar Editar y Borrar si el rol no es usuario */}
+                                            {rol !== "usuario" && (
+                                                <>
+                                                    <Link className={`${styles.btn} ${styles.btnEditar}`} to={`/mascotas/edit/${mascota.id}`}>Editar</Link>
+                                                    <button className={`${styles.btn} ${styles.btnBorrar}`} onClick={() => handleShow(mascota.id)}>Borrar</button>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +140,6 @@ function Mascotas() {
                     </div>
                 )}
 
-                {/* Paginación */}
                 <div className={styles.pagination} style={{ justifyContent: "flex-end" }}>
                     <button
                         className={styles.btn}
@@ -160,7 +158,6 @@ function Mascotas() {
                     </button>
                 </div>
 
-                {/* Modal Confirmación Borrado */}
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>ATENCIÓN!!</Modal.Title>
