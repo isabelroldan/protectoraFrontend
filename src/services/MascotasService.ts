@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getToken } from "./LoginService";
 
-// const baseUrl = 'http://localhost:8000/api/mascotas'
-const baseUrl = 'https://protectora-backend.onrender.com/api';
+const baseUrl = 'http://localhost:8000/api/mascotas'
+// const baseUrl = 'https://protectora-backend.onrender.com/api';
 
 
 /* export const getMascotas = async (page = 1, perPage = 5) => {

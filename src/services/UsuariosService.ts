@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getToken } from "./LoginService";
 
-// const baseUrl = 'http://localhost:8000/api/usuarios'
-const baseUrl = 'https://protectora-backend.onrender.com/api';
+const baseUrl = 'http://localhost:8000/api/usuarios'
+// const baseUrl = 'https://protectora-backend.onrender.com/api';
 
 
 // Obtener todos los usuarios
